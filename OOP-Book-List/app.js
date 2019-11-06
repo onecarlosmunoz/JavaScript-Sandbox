@@ -70,6 +70,55 @@ UI.prototype.createMessage = function(messageHeader, messageBody, type) {
   } , 3000);
 }
 
+function StoreLocal() {}
+
+// Functions are static and not prototypes so we can call them without instantiating
+StoreLocal.getBooks = function() {
+  let books;
+
+  if (localStorage.getItem('books') === null) {
+    books = [];
+  } else {
+    books = JSON.parse(localStorage.getItem('books'));
+  }
+
+  return books;
+}
+
+StoreLocal.displayBooks = function () {
+  const books = StoreLocal.getBooks();
+
+  books.forEach(book => {
+    const ui = new UI;
+    ui.addBookToList(book);
+  });
+}
+
+StoreLocal.addBook = function (book) {
+  const books = StoreLocal.getBooks();
+  books.push(book);
+  localStorage.setItem('books', JSON.stringify(books));
+}
+
+StoreLocal.removeBook = function (isbn) {
+  const books = StoreLocal.getBooks();
+
+  books.forEach((book, index) => {
+    if (book.isbn === isbn) {
+      books.splice(index, 1);
+    }
+  });
+
+  localStorage.setItem('books', JSON.stringify(books));
+}
+
+StoreLocal.clearBooks = function () {
+  localStorage.clear();
+}
+
+// DOM Load Event
+document.addEventListener('DOMContentLoaded', StoreLocal.displayBooks);
+
 // Event listener for adding books
 document.getElementById('book-form').addEventListener('submit', function(e) {
   
@@ -85,6 +134,9 @@ document.getElementById('book-form').addEventListener('submit', function(e) {
     ui.createMessage('Success!', 'Book inserted to list successfully', 'success');
     const book = new Book(title, author, isbn);
     ui.addBookToList(book);
+
+    StoreLocal.addBook(book);
+
     ui.clearFields();
   }
 
@@ -92,13 +144,12 @@ document.getElementById('book-form').addEventListener('submit', function(e) {
 });
 
 // Event listener for clear books
-document.getElementById('book-form').addEventListener('reset', function (e) {
-  console.log('ite');
-
-  const ui = new UI();
-
+document.getElementById('book-form').addEventListener('reset', function (e) {const ui = new UI();
   if (confirm('Are you sure you want to clear all your tasks?')) {
     ui.clearBooks();
+
+    StoreLocal.clearBooks();
+    
     ui.createMessage('Success!', 'All books cleared.', 'success');
   }
 })
@@ -108,5 +159,10 @@ document.getElementById('book-list').addEventListener('click', function(e) {
   const ui = new UI();
   ui.deleteBook(e.target);
 
+  // Try and get ISBN# of current book to compare local storage entry
+  StoreLocal.removeBook(e.target.parentElement.previousElementSibling.textContent);
+
   ui.createMessage('Success!', 'Book was deleted successfully, with grace.', 'success');
 })
+
+console.log(UI);
