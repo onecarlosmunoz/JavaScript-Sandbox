@@ -172,5 +172,3 @@ document.getElementById('book-list').addEventListener('click', function(e) {
 
   ui.createMessage('Success!', 'Book was deleted successfully, with grace.', 'success');
 })
-
-console.log(UI);
