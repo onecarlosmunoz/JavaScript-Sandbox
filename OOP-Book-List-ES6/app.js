@@ -9,10 +9,11 @@ class Book {
 
 // Create UI class
 class UI {
+
+  // Add book to list
   addBookToList(book) {
     const list = document.getElementById('book-list');
 
-    // Create tr element
     const row = document.createElement('tr');
     row.innerHTML = `     
     <td>${book.title}</td>  
@@ -24,12 +25,14 @@ class UI {
     list.appendChild(row);
   }
 
+  // Delete book from list
   deleteBook(target) {
     if (target.className === 'delete') {
       target.parentElement.parentElement.remove();
     }
   }
 
+  // Clear books from list
   clearBooks() {
     const list = document.getElementById('book-list');
 
@@ -38,18 +41,19 @@ class UI {
     }
   }
 
+  // Clear all input fields
   clearFields() {
     document.getElementById('book-title').value = '';
     document.getElementById('book-author').value = '';
     document.getElementById('book-isbn').value = '';
   }
 
+  // Create message from event
   createMessage(messageHeader, messageBody, type) {
     const message = document.createElement('article');
     const container = document.querySelector('.container');
     const form = document.getElementById('book-form');
 
-    // if error
     message.className = `message is-${type}`;
     message.innerHTML = `
     <div class="message-header">
@@ -68,12 +72,11 @@ class UI {
   }
 }
 
-// Event listener for adding a book
+// Event listener for adding books
 document.getElementById('book-form').addEventListener('submit', function (e) {
 
   const ui = new UI();
 
-  // Get form values
   const title = document.getElementById('book-title').value,
     author = document.getElementById('book-author').value,
     isbn = document.getElementById('book-isbn').value;
@@ -90,6 +93,7 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
   e.preventDefault();
 });
 
+// Event listener for clear books
 document.getElementById('book-form').addEventListener('reset', function (e) {
   console.log('ite');
 
@@ -101,7 +105,7 @@ document.getElementById('book-form').addEventListener('reset', function (e) {
   }
 })
 
-// Event listener for deleting a Book
+// Event listener for deleting books
 document.getElementById('book-list').addEventListener('click', function (e) {
   const ui = new UI();
   ui.deleteBook(e.target);

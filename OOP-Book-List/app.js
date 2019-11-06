@@ -7,15 +7,12 @@ function Book(title, author, isbn) {
 }
 
 // UI Constuctor
-function UI() {
-  
-}
+function UI() {}
 
 // Add book to list
 UI.prototype.addBookToList = function(book) {
   const list = document.getElementById('book-list');
 
-  // Create tr element
   const row = document.createElement('tr');
   row.innerHTML = `     
     <td>${book.title}</td>  
@@ -27,19 +24,35 @@ UI.prototype.addBookToList = function(book) {
   list.appendChild(row);
 }
 
+// Delete book from list
+UI.prototype.deleteBook = function (target) {
+  if (target.className === 'delete') {
+    target.parentElement.parentElement.remove();
+  }
+}
+
+// Clear all books from list
+UI.prototype.clearBooks = function () {
+  const list = document.getElementById('book-list');
+
+  while (list.firstChild) {
+    list.removeChild(list.firstChild);
+  }
+};
+
+// Clear all input fields
 UI.prototype.clearFields = function() {
   document.getElementById('book-title').value = '';
   document.getElementById('book-author').value = '';
   document.getElementById('book-isbn').value = '';
 }
 
+// Create message from event
 UI.prototype.createMessage = function(messageHeader, messageBody, type) {
-
   const message = document.createElement('article');
   const container = document.querySelector('.container');
   const form = document.getElementById('book-form');
 
-  // if error
   message.className = `message is-${type}`;
   message.innerHTML = `
   <div class="message-header">
@@ -57,26 +70,11 @@ UI.prototype.createMessage = function(messageHeader, messageBody, type) {
   } , 3000);
 }
 
-UI.prototype.deleteBook = function(target) {
-  if(target.className === 'delete') {
-    target.parentElement.parentElement.remove();
-  }
-}
-
-UI.prototype.clearBooks = function() {
-  const list = document.getElementById('book-list');
-
-  while (list.firstChild) {
-    list.removeChild(list.firstChild);
-  }
-};
-
-// Event listener for add book
+// Event listener for adding books
 document.getElementById('book-form').addEventListener('submit', function(e) {
   
   const ui = new UI();
 
-  // Get form values
   const title = document.getElementById('book-title').value,
         author = document.getElementById('book-author').value,
         isbn = document.getElementById('book-isbn').value;
@@ -93,6 +91,7 @@ document.getElementById('book-form').addEventListener('submit', function(e) {
   e.preventDefault();
 });
 
+// Event listener for clear books
 document.getElementById('book-form').addEventListener('reset', function (e) {
   console.log('ite');
 
@@ -104,7 +103,7 @@ document.getElementById('book-form').addEventListener('reset', function (e) {
   }
 })
 
-// Delete Book
+// Event listener for deleting books
 document.getElementById('book-list').addEventListener('click', function(e) {
   const ui = new UI();
   ui.deleteBook(e.target);
