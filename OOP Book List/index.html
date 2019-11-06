@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book List - JS OOP Practice</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    #wrapper {
+      flex: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="section" id="wrapper">
+    <div class="container">
+      <h1 class="title is-size-2">Book List</h1>
+      <hr>
+      <form id="book-form">
+        <h1 class="title is-size-4">Add New Book</h1>
+        <div class="field">
+          <label class="label">Title</label>
+          <div class="control">
+            <input class="input" id="book-title" type="text" placeholder="Enter book title">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Author</label>
+          <div class="control">
+            <input class="input" id="book-author" type="text" placeholder="Enter author of book">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">ISBN#</label>
+          <div class="control">
+            <input class="input" id="book-isbn" type="text" placeholder="Enter ISBN# of book">
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <input class="button is-primary" type="submit" id="book-submit" style="margin-top: 10px"
+              value="Add New Book"></input>
+            <input class="button" type="reset" id="book-submit" style="margin-top: 10px"
+              value="Clear All Books"></input>
+          </div>
+        </div>
+      </form>
+      <hr>
+      <table class="table is-striped is-hoverable is-fullwidth" id>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN#</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="book-list">
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>
+          Just a tiny project made with Bulma by <a href="https://github.com/onecarlosmunoz">me</a> for
+          experimenting with OOP concepts in JavaScript and ES6 classes. Based on Brad Traversy's <a
+            href="https://www.udemy.com/course/modern-javascript-from-the-beginning/">online JavaScript course</a>.
+        </p>
+      </div>
+    </div>
+  </footer>
+  <script src="app.js"></script>
+</body>
+
+</html>
