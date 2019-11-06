@@ -147,12 +147,21 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
 
 // Event listener for clear books
 document.getElementById('book-form').addEventListener('reset', function (e) {const ui = new UI();
-  
-  if (confirm('Are you sure you want to clear all books?')) {
-    ui.clearBooks();
-    StoreLocal.clearBooks();
-    ui.createMessage('Success!', 'All books cleared.', 'success');
-  }
+    //This checks if table is empty
+    const isEmpty = document.querySelectorAll("tr").length <= 1;
+
+    //If table is empty, don't allow clear
+    if (isEmpty) {
+      ui.createMessage('Warning', "Can't clear an empty book list", 'warning');
+    } else {
+      if (confirm('Are you sure you want to clear all your tasks?')) {
+        ui.clearBooks();
+
+        StoreLocal.clearBooks();
+
+        ui.createMessage('Success!', 'All books cleared.', 'success');
+      }
+    }
 })
 
 // Event listener for deleting books
